@@ -1,53 +1,59 @@
-import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
+"use client";
 
-type Theme = 'light' | 'dark';
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  ReactNode,
+} from "react";
+
+type Theme = "light" | "dark";
 
 interface ThemeContextType {
   theme: Theme;
   toggleTheme: () => void;
 }
 
-// Create context with default value to prevent errors
+// Safe default value
 const ThemeContext = createContext<ThemeContextType>({
-  theme: 'light',
+  theme: "light",
   toggleTheme: () => {},
 });
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
-  const [theme, setTheme] = useState<Theme>('light');
+  const [theme, setTheme] = useState<Theme>("light");
 
   useEffect(() => {
-    // Check for saved theme preference or default to light
     try {
-      const savedTheme = (localStorage.getItem('theme') as Theme) || 'light';
+      const savedTheme =
+        (localStorage.getItem("theme") as Theme | null) || "light";
       setTheme(savedTheme);
-      
-      // Apply theme immediately to avoid flash
-      if (savedTheme === 'dark') {
-        document.documentElement.classList.add('dark');
+
+      if (savedTheme === "dark") {
+        document.documentElement.classList.add("dark");
       } else {
-        document.documentElement.classList.remove('dark');
+        document.documentElement.classList.remove("dark");
       }
-    } catch (error) {
-      // localStorage not available, use default
-      console.debug('localStorage not available, using light theme');
+    } catch {
+      console.debug("localStorage not available, using light theme");
     }
   }, []);
 
   const toggleTheme = () => {
-    const newTheme = theme === 'light' ? 'dark' : 'light';
+    const newTheme: Theme = theme === "light" ? "dark" : "light";
     setTheme(newTheme);
-    
+
     try {
-      localStorage.setItem('theme', newTheme);
-    } catch (error) {
-      console.debug('Could not save theme preference');
+      localStorage.setItem("theme", newTheme);
+    } catch {
+      console.debug("Could not save theme preference");
     }
-    
-    if (newTheme === 'dark') {
-      document.documentElement.classList.add('dark');
+
+    if (newTheme === "dark") {
+      document.documentElement.classList.add("dark");
     } else {
-      document.documentElement.classList.remove('dark');
+      document.documentElement.classList.remove("dark");
     }
   };
 
@@ -59,6 +65,5 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
 }
 
 export function useTheme() {
-  const context = useContext(ThemeContext);
-  return context;
+  return useContext(ThemeContext);
 }
