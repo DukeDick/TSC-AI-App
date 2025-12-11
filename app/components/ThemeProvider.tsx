@@ -15,7 +15,6 @@ interface ThemeContextType {
   toggleTheme: () => void;
 }
 
-// Safe default value
 const ThemeContext = createContext<ThemeContextType>({
   theme: "light",
   toggleTheme: () => {},
@@ -26,11 +25,11 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     try {
-      const savedTheme =
+      const saved =
         (localStorage.getItem("theme") as Theme | null) || "light";
-      setTheme(savedTheme);
+      setTheme(saved);
 
-      if (savedTheme === "dark") {
+      if (saved === "dark") {
         document.documentElement.classList.add("dark");
       } else {
         document.documentElement.classList.remove("dark");
@@ -41,16 +40,16 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const toggleTheme = () => {
-    const newTheme: Theme = theme === "light" ? "dark" : "light";
-    setTheme(newTheme);
+    const next: Theme = theme === "light" ? "dark" : "light";
+    setTheme(next);
 
     try {
-      localStorage.setItem("theme", newTheme);
+      localStorage.setItem("theme", next);
     } catch {
-      console.debug("Could not save theme preference");
+      console.debug("Could not save theme");
     }
 
-    if (newTheme === "dark") {
+    if (next === "dark") {
       document.documentElement.classList.add("dark");
     } else {
       document.documentElement.classList.remove("dark");
