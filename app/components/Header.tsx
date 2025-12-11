@@ -37,13 +37,15 @@ export function Header({ currentPage, onNavigate }: HeaderProps) {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 sm:h-20">
-          {/* Logo and Title */}
+          
+          {/* Logo + Animated Icon + Title */}
           <motion.div 
             className="flex items-center gap-3 sm:gap-4 cursor-pointer"
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             onClick={() => onNavigate('home')}
           >
+            {/* Logo */}
             <div className="relative w-10 h-10 sm:w-12 sm:h-12 rounded-2xl overflow-hidden bg-white shadow-lg shadow-blue-500/10 border border-slate-200/70">
               <Image 
                 src={Logo} 
@@ -53,8 +55,8 @@ export function Header({ currentPage, onNavigate }: HeaderProps) {
               />
             </div>
 
+            {/* Animated Icon Glow */}
             <div className="relative w-10 h-10 sm:w-12 sm:h-12">
-              {/* Animated glow */}
               <motion.div 
                 className="absolute inset-0 bg-gradient-to-tr from-blue-500 via-cyan-400 to-purple-500 rounded-2xl blur-lg opacity-60"
                 animate={{
@@ -63,6 +65,7 @@ export function Header({ currentPage, onNavigate }: HeaderProps) {
                 }}
                 transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
               />
+              
               <div className="relative w-full h-full bg-gradient-to-tr from-blue-500 via-cyan-400 to-purple-500 rounded-2xl flex items-center justify-center shadow-lg shadow-blue-500/30">
                 <motion.div
                   animate={{ rotate: [0, 360] }}
@@ -72,35 +75,40 @@ export function Header({ currentPage, onNavigate }: HeaderProps) {
                 </motion.div>
               </div>
             </div>
+
+            {/* Title */}
             <div>
               <motion.h1 
-                className="text-base sm:text-lg text-slate-900 dark:text-white transition-colors leading-tight bg-clip-text"
-                whileHover={{
-                  backgroundImage: 'linear-gradient(90deg, rgb(59, 130, 246), rgb(34, 211, 238), rgb(168, 85, 247))',
-                  WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent',
-                }}
+                className="text-base sm:text-lg leading-tight bg-gradient-to-r from-blue-500 via-cyan-400 to-purple-500 bg-clip-text text-transparent"
+                whileHover={{ scale: 1.03, y: -1 }}
+                transition={{ type: "spring", stiffness: 260, damping: 20 }}
               >
                 Techo Startup Center AI
               </motion.h1>
+
               <p className="text-xs text-slate-500 dark:text-slate-400 hidden sm:block">
                 Khmer AI Innovation
               </p>
             </div>
           </motion.div>
 
-          {/* Theme Toggle */}
+          {/* THEME TOGGLE BUTTON */}
           <motion.button
             onClick={toggleTheme}
             className="relative w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center overflow-hidden group shadow-lg"
             whileHover={{ scale: 1.1, rotate: 5 }}
             whileTap={{ scale: 0.9 }}
           >
-            {/* Glow effect */}
+            {/* Glow */}
             <motion.div
-              className="absolute inset-0 bg-gradient-to-tr from-amber-400/0 via-amber-400/0 to-amber-400/0 dark:from-blue-400/0 dark:via-cyan-400/0 dark:to-blue-400/0 group-hover:from-amber-400/20 group-hover:via-amber-400/10 group-hover:to-amber-400/20 dark:group-hover:from-blue-400/20 dark:group-hover:via-cyan-400/10 dark:group-hover:to-blue-400/20 transition-all duration-300"
+              className="absolute inset-0 bg-gradient-to-tr from-amber-400/0 via-amber-400/0 to-amber-400/0 
+                         dark:from-blue-400/0 dark:via-cyan-400/0 dark:to-blue-400/0 
+                         group-hover:from-amber-400/20 group-hover:via-amber-400/10 group-hover:to-amber-400/20 
+                         dark:group-hover:from-blue-400/20 dark:group-hover:via-cyan-400/10 dark:group-hover:to-blue-400/20 
+                         transition-all duration-300"
             />
 
+            {/* Sun / Moon Animated */}
             <motion.div
               initial={false}
               animate={{ 
@@ -119,10 +127,7 @@ export function Header({ currentPage, onNavigate }: HeaderProps) {
                 </motion.div>
               ) : (
                 <motion.div
-                  animate={{ 
-                    rotate: [0, 360],
-                    scale: [1, 1.1, 1]
-                  }}
+                  animate={{ rotate: [0, 360], scale: [1, 1.1, 1] }}
                   transition={{ 
                     rotate: { duration: 20, repeat: Infinity, ease: "linear" },
                     scale: { duration: 2, repeat: Infinity, ease: "easeInOut" }
@@ -133,12 +138,13 @@ export function Header({ currentPage, onNavigate }: HeaderProps) {
               )}
             </motion.div>
 
-            {/* Particles on hover */}
+            {/* Particles */}
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
               {[...Array(3)].map((_, i) => (
                 <motion.div
                   key={i}
-                  className="absolute w-1 h-1 rounded-full bg-gradient-to-r from-amber-400 to-orange-400 dark:from-blue-400 dark:to-cyan-400 opacity-0 group-hover:opacity-70"
+                  className="absolute w-1 h-1 rounded-full bg-gradient-to-r from-amber-400 to-orange-400 
+                             dark:from-blue-400 dark:to-cyan-400 opacity-0 group-hover:opacity-70"
                   style={{
                     left: `${30 + i * 20}%`,
                     top: `${30 + i * 20}%`,
@@ -157,6 +163,7 @@ export function Header({ currentPage, onNavigate }: HeaderProps) {
               ))}
             </div>
           </motion.button>
+
         </div>
       </div>
     </motion.header>
