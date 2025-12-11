@@ -1,11 +1,10 @@
 "use client";
 
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import { Sparkles, Moon, Sun } from 'lucide-react';
 import { useTheme } from './ThemeProvider';
 import Image from "next/image";
 import Logo from "../Image/logo.png";
-
 
 interface HeaderProps {
   currentPage: 'home' | 'nlp' | 'ocr';
